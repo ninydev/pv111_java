@@ -2,13 +2,27 @@ package org.itstep.classworks.feb;
 
 import org.itstep.entities.Role;
 import org.itstep.entities.User;
+import org.itstep.ui.Button;
+import org.itstep.ui.Clickable;
 
 public class Feb_06 implements Runnable
 {
     @Override
     public void run() {
         System.out.println("Class Work " + this.getClass());
-        createUserAndRoles();
+        createButton();
+    }
+
+    private void createButton () {
+        Button btn = new Button();
+        btn.click = new Clickable() {
+            @Override
+            public void click() {
+                System.out.println("Click");
+            }
+        };
+
+        System.out.println("Это не интерфейс: " + btn.click.getClass());
     }
 
     private void createUserAndRoles() {
