@@ -1,0 +1,12 @@
+/home/keeper/.jdks/openjdk-21.0.2/bin/java
+    -javaagent:/snap/intellij-idea-ultimate/473/lib/idea_rt.jar=40405:/snap/intellij-idea-ultimate/473/bin
+    -Dfile.encoding=UTF-8
+    -Dsun.stdout.encoding=UTF-8
+    -Dsun.stderr.encoding=UTF-8
+    -classpath /home/keeper/IdeaProjects/pv111_java/first_project/target/classes org.itstep.Main
+
+
+/home/keeper/.jdks/openjdk-21.0.2/bin/java
+    -javaagent:/snap/intellij-idea-ultimate/473/lib/idea_rt.jar=43043:/snap/intellij-idea-ultimate/473/bin
+    -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8
+    -classpath /home/keeper/IdeaProjects/pv111_java/first_project/target/classes org.itstep.OtherMain
