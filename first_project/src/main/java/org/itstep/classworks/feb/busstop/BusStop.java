@@ -26,7 +26,9 @@ public class BusStop implements Runnable
      * @param max
      * @return
      */
-    private int getRandom(int min, int max) {
+    private int getRandom(int min, int max) throws IllegalArgumentException {
+        if (max - min <= 0)
+            throw new IllegalArgumentException("bound must be positive");
         return random.nextInt(max - min) + min;
     }
 

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements Comparable
+{
 
     private String name;
     private String email;
@@ -18,25 +19,8 @@ public class User {
     // Пользователь имеет большое количество ролей
     private ArrayList<Role> roles = new ArrayList<>();
 
-
-
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-
-    //    public void SET_NAME(String name) {
-//        this.name = name;
-//    }
-//
-//    public String getUserName() {
-//        return this.name;
-//    }
-
-
-
-
+    @Override
+    public int compareTo(Object o) {
+        return -this.name.compareTo(((User)o).getName());
+    }
 }
