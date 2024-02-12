@@ -1,16 +1,103 @@
 package org.itstep.classworks.feb;
 
+import org.itstep.classworks.feb.lambda.MyOperation;
+import org.itstep.classworks.feb.lambda.OperationsType;
 import org.itstep.entities.Role;
 import org.itstep.entities.User;
 
 import java.util.*;
+import java.util.function.*;
+
 
 public class Feb_12 implements Runnable
 {
     @Override
     public void run() {
-        mapSet();
+        calc();
     }
+
+    private void systemInterfaces() {
+        /**
+         * Для операций сравнения (с возвращением true false) можно воспользоваться
+         * функциональным (системным) интерфейсом Predicate
+         */
+        Predicate<Integer> positive;
+        positive = (x) -> x > 0;
+        positive.test(10);
+
+        /**
+         * Операции с 2 элементами - в результате которого получается тот же тип
+         */
+        BinaryOperator<Integer> plus;
+        plus = (a,b) -> a + b;
+        plus.apply(2,2);
+        // UnaryOperator - 1  элемент
+
+        /**
+         * Принимает 1 аргумент 1 типа - возвращает другой тип
+         */
+        Function<User, String> toName;
+        toName = user -> user.getName();
+        // toName.apply()
+
+        /**
+         * Удобен для изменения операций например при переборе объектов в коллекции
+         */
+        Consumer<User> outName;
+        outName = user -> System.out.println(user.getName());
+
+        /**
+         * Актуален для реализации фабричного подхода
+         * Когда мы поручаем фабрике прцоес создания новых экземпляров объектов
+         */
+        Supplier<UUID> createUUID;
+        createUUID = () -> UUID.randomUUID();
+        createUUID.get();
+
+    }
+
+    private MyOperation getOperation(OperationsType type) {
+        MyOperation operation = null;
+        switch (type) {
+            case plus -> operation = (a, b) -> a + b;
+            case minus -> operation = (a, b) -> a - b;
+        }
+        if(operation == null) {
+            throw new IllegalArgumentException("Type not found");
+        }
+        return operation;
+    }
+
+    private Double doOperation(Double a, Double b, MyOperation operation){
+
+        return operation.operation(a,b);
+    }
+
+    private void calc(){
+        MyOperation plus;
+        plus = (a, b) -> a + b;
+        MyOperation minus;
+        minus = (a, b) -> a - b;
+
+        Double r = doOperation(1.0,1.0, plus);
+        Double r1 = doOperation(1.0,1.0, minus);
+
+
+    }
+
+    private void byLambda() {
+        // Создам переменную для операции
+        MyOperation operation;
+        // Загружу (реализую) операцию
+        operation = (a, b) ->  a + b;
+
+        System.out.println(operation.operation(2.9,2.2));
+
+    }
+
+
+
+
 
     private void mapSet(){
         ArrayList<Role> roles = new ArrayList<>();
