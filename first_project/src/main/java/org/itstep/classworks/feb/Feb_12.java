@@ -2,6 +2,7 @@ package org.itstep.classworks.feb;
 
 import org.itstep.classworks.feb.lambda.MyOperation;
 import org.itstep.classworks.feb.lambda.OperationsType;
+import org.itstep.classworks.feb.lambda.UserFactory;
 import org.itstep.entities.Role;
 import org.itstep.entities.User;
 
@@ -50,9 +51,21 @@ public class Feb_12 implements Runnable
          * Актуален для реализации фабричного подхода
          * Когда мы поручаем фабрике прцоес создания новых экземпляров объектов
          */
-        Supplier<UUID> createUUID;
-        createUUID = () -> UUID.randomUUID();
-        createUUID.get();
+        Supplier<UUID> createID;
+        createID = () -> UUID.randomUUID();
+        createID.get();
+
+        /**
+         * Хорошей практикой является передача прав на создание экземпляров объектов
+         * фрагменту кода (фабрике)
+         * Тогда вы сможете контролировать процесс - и сразу менять состояния по умолчанию
+         */
+        UserFactory userFactory;
+        userFactory = (name, email) -> {
+            ArrayList<Role> roles = new ArrayList<>();
+            return new User(name, email, "QeAsdZxc!23", roles);
+        };
+
 
     }
 
