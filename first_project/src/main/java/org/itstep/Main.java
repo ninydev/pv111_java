@@ -3,6 +3,7 @@ package org.itstep;
 import org.itstep.classworks.feb.Feb_06;
 import org.itstep.classworks.feb.Feb_08;
 import org.itstep.classworks.feb.Feb_12;
+import org.itstep.classworks.feb.Feb_13;
 import org.itstep.classworks.feb.busstop.BusStop;
 
 public class Main {
@@ -16,7 +17,7 @@ public class Main {
 //        }
 
 
-        Runnable classWork = new Feb_12();
+        Runnable classWork = new Feb_13();
         classWork.run();
 
         System.out.println("App finish");
