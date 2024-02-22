@@ -1,13 +1,10 @@
 package org.itstep;
 
-import org.itstep.classworks.feb.Feb_06;
-import org.itstep.classworks.feb.Feb_08;
-import org.itstep.classworks.feb.Feb_12;
-import org.itstep.classworks.feb.Feb_13;
+import org.itstep.classworks.feb.*;
 import org.itstep.classworks.feb.busstop.BusStop;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
 //        BusStop busStop = new BusStop();
 //        try {
@@ -17,9 +14,11 @@ public class Main {
 //        }
 
 
-        Runnable classWork = new Feb_13();
+        Runnable classWork = new Feb_22();
         classWork.run();
 
+        Thread.sleep(1000);
+        System.out.println("\n\n+------------------------------+");
         System.out.println("App finish");
     }
 }
