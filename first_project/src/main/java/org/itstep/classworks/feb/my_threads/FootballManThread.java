@@ -27,17 +27,20 @@ public class FootballManThread implements Runnable
     }
     @Override
     public void run() {
+
+        operation();
+
 //        synchronized (ball) {
 //            operation();
 //        }
 
-        try {
-            sem.acquire();
-            operation();
-            sem.release();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            sem.acquire();
+//            operation();
+//            sem.release();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
     }
 

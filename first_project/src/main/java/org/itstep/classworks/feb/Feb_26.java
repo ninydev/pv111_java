@@ -10,8 +10,7 @@ import org.itstep.classworks.feb.my_threads.resource.CommonBall;
 import org.itstep.entities.types.AvailableColor;
 
 import java.util.ArrayList;
-import java.util.concurrent.Exchanger;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 
 public class Feb_26 implements Runnable
 {
@@ -20,9 +19,38 @@ public class Feb_26 implements Runnable
 
         System.out.println("Class Work ThreadName: " + Thread.currentThread().getName() + "\n\n");
 
-        doStore();
+        doPull();
 
     }
+
+    private void doPull() {
+        CommonBall ball = new CommonBall();
+
+        FootballManThread f1 = new FootballManThread(AvailableColor.blue, ball);
+        FootballManThread f2 = new FootballManThread(AvailableColor.red, ball);
+        FootballManThread f3 = new FootballManThread(AvailableColor.green, ball);
+
+        try{
+            ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                    1, // Размер пула потоков
+                    1, // Максимальное количество потоков
+                    0L, // Время ожидания перед завершением неиспользуемых потоков
+                    TimeUnit.MILLISECONDS, // Единица измерения времени
+                    new LinkedBlockingQueue<>() // Очередь задач
+            );
+            executor.execute(f1);
+            executor.execute(f2);
+            executor.execute(f3);
+
+            executor.shutdownNow();
+
+        } catch (Exception e) {}
+
+
+
+
+    }
+
 
     private void doStore() {
         Store store = new Store();
