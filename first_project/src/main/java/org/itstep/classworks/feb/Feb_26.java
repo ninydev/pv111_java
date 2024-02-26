@@ -3,6 +3,9 @@ package org.itstep.classworks.feb;
 import org.itstep.classworks.feb.my_threads.FootballManThread;
 import org.itstep.classworks.feb.my_threads.for_exchange.GetExchange;
 import org.itstep.classworks.feb.my_threads.for_exchange.PutExchange;
+import org.itstep.classworks.feb.my_threads.for_wait.Hummer;
+import org.itstep.classworks.feb.my_threads.for_wait.Producer;
+import org.itstep.classworks.feb.my_threads.for_wait.Store;
 import org.itstep.classworks.feb.my_threads.resource.CommonBall;
 import org.itstep.entities.types.AvailableColor;
 
@@ -17,7 +20,25 @@ public class Feb_26 implements Runnable
 
         System.out.println("Class Work ThreadName: " + Thread.currentThread().getName() + "\n\n");
 
-        doExchange();
+        doStore();
+
+    }
+
+    private void doStore() {
+        Store store = new Store();
+        Hummer hummer = new Hummer(store);
+        Thread th = new Thread(hummer);
+        th.start();
+
+        Producer producer = new Producer(store);
+        Thread tp = new Thread(producer);
+        tp.start();
+
+        try {
+            th.join();
+            tp.join();
+        } catch (Exception e) {}
+
 
     }
 
