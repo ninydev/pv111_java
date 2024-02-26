@@ -14,7 +14,7 @@ public class Main {
 //        }
 
 
-        Runnable classWork = new Feb_22();
+        Runnable classWork = new Feb_26();
         classWork.run();
 
         Thread.sleep(1000);
