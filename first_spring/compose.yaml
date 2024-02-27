@@ -1,0 +1,11 @@
+services:
+  mysql:
+    container_name: java.pv111.mysql
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=pv111'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=QweAsdZxc!23'
+      - 'MYSQL_USER=user'
+    ports:
+      - '3306:3306'
