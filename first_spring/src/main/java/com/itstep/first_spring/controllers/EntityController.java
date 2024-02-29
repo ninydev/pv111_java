@@ -2,10 +2,14 @@ package com.itstep.first_spring.controllers;
 
 import com.itstep.first_spring.models.EntityModel;
 import com.itstep.first_spring.repositories.EntityRepository;
+import com.itstep.first_spring.requests.EntityModelCreateRequest;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/entity")
+@Validated
 public class EntityController {
 
     private final EntityRepository entityRepository;
@@ -23,14 +28,16 @@ public class EntityController {
 
     /**
      * Create
-     * @param newEntity
+     * @param request
      * @return
      */
     @PostMapping("")
-    public ResponseEntity<EntityModel> create(@RequestBody EntityModel newEntity) {
+    public ResponseEntity<EntityModel> create(
+            @RequestBody EntityModelCreateRequest request
+    ) {
 
         // Ссылка (указатель) на вновь созданный экземпляр сущности
-        EntityModel createdEntity = entityRepository.save(newEntity);
+        EntityModel createdEntity = entityRepository.save(request.toEntity());
 
         // Ссылка (URI) на запрос к этой сущности
         URI location = ServletUriComponentsBuilder
@@ -48,9 +55,8 @@ public class EntityController {
      * @return
      */
     @GetMapping("")
-    public ResponseEntity<List<EntityModel>> readAll() {
-        List<EntityModel> result = new ArrayList<>();
-        entityRepository.findAll().forEach(result::add);
+    public ResponseEntity<Page<EntityModel>> readAll(Pageable pageable) {
+        Page<EntityModel> result = entityRepository.findAll(pageable);
 
         if (result.isEmpty()) {
             return ResponseEntity.noContent().build();
