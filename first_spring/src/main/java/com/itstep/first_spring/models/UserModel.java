@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -25,6 +26,7 @@ public class UserModel extends BaseEntity
     @Schema(description = "User password (mast have [A-Z],[a-z], [0-9], >6 )", example = "QweAsdZxc!23")
     @Size(min = 6, max = 100)
     private String password;
+
 
     @PrePersist
     @PreUpdate
