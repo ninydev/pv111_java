@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Set;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
@@ -20,4 +22,13 @@ public class PerformerModel extends BaseEntity
     @OneToOne(mappedBy = "performer")
     @Schema(description = "If performer is user")
     private UserModel user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "performer_songs",
+            joinColumns = { @JoinColumn(name = "performer_id") },
+            inverseJoinColumns = { @JoinColumn(name = "song_id") }
+    )
+    @Schema(description = "Performer songs")
+    private Set<SongModel> songs;
 }

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Set;
+
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
@@ -33,6 +35,11 @@ public class UserModel extends BaseEntity
     @Nullable
     @Schema(description = "If user is performer")
     private PerformerModel performer;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            mappedBy = "uploader")
+    @Schema(description = "User Songs")
+    protected Set<SongModel> songs;
 
     @PrePersist
     @PreUpdate
