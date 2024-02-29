@@ -1,6 +1,7 @@
 package com.itstep.first_spring.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -27,6 +28,11 @@ public class UserModel extends BaseEntity
     @Size(min = 6, max = 100)
     private String password;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "performer_id", referencedColumnName = "id")
+    @Nullable
+    @Schema(description = "If user is performer")
+    private PerformerModel performer;
 
     @PrePersist
     @PreUpdate
