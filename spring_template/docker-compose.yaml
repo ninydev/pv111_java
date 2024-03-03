@@ -1,0 +1,10 @@
+services:
+  vpu111.db.mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=vpu111'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=QweAsdZxc!23'
+      - 'MYSQL_USER=user'
+    ports:
+      - '3306:3306'
