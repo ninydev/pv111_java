@@ -72,15 +72,15 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     private void hashPassword() {
-        // Проверка на длину пароля и наличие символов
-        if (password == null || password.length() < 6 ||
-                !password.matches(".*[A-Z].*") || // Проверка наличия большой буквы
-                !password.matches(".*[a-z].*") || // Проверка наличия маленькой буквы
-                !password.matches(".*\\d.*")) {  // Проверка наличия цифры
-            throw new IllegalArgumentException("Пароль должен быть не менее 6 символов и содержать хотя бы одну большую букву, одну маленькую букву и одну цифру");
-        }
-
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        this.password = passwordEncoder.encode(this.password);
+//        // Проверка на длину пароля и наличие символов
+//        if (password == null || password.length() < 6 ||
+//                !password.matches(".*[A-Z].*") || // Проверка наличия большой буквы
+//                !password.matches(".*[a-z].*") || // Проверка наличия маленькой буквы
+//                !password.matches(".*\\d.*")) {  // Проверка наличия цифры
+//            throw new IllegalArgumentException("Пароль должен быть не менее 6 символов и содержать хотя бы одну большую букву, одну маленькую букву и одну цифру");
+//        }
+//
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        this.password = passwordEncoder.encode(this.password);
     }
 }

@@ -1,5 +1,6 @@
 package com.itstep.spring_template.services.auth;
 
+import com.itstep.spring_template.dto.auth.UserDTO;
 import com.itstep.spring_template.models.auth.Role;
 import com.itstep.spring_template.models.auth.User;
 import com.itstep.spring_template.request.auth.SignInRequest;
@@ -35,10 +36,12 @@ public class AuthenticationService {
                 .role(Role.ROLE_USER)
                 .build();
 
+        user.setAuthor(user);
+
         userService.create(user);
 
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse(jwt, new UserDTO(user));
     }
 
     /**
@@ -53,11 +56,13 @@ public class AuthenticationService {
                 request.getPassword()
         ));
 
-        var user = userService
-                .userDetailsService()
-                .loadUserByUsername(request.getUsername());
+//        var userDetails = userService
+//                .userDetailsService()
+//                .loadUserByUsername(request.getUsername());
+
+        User user = userService.getByUsername(request.getUsername());
 
         var jwt = jwtService.generateToken(user);
-        return new JwtAuthenticationResponse(jwt);
+        return new JwtAuthenticationResponse(jwt, new UserDTO(user));
     }
 }
