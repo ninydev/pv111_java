@@ -86,7 +86,7 @@ public class UserModel extends BaseEntity implements UserDetails
     @PrePersist
     @PreUpdate
     private void beforeCreateOrUpdate(){
-        // hashPassword();
+        hashPassword();
     }
 
     private void hashPassword() {

@@ -40,7 +40,7 @@ public class UserService {
             throw new RuntimeException("Пользователь с таким email уже существует");
         }
 
-        return save(user);
+        return this.save(user);
     }
 
     /**
