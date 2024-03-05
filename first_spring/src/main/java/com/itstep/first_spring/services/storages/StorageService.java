@@ -14,12 +14,9 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class StorageService {
 
-    private final StorageServiceDriver storage;
+    private final StorageServiceDriver storage =  new StorageServiceDriver();
     private final String tempBucketName = "temp";
 
-    public StorageService(StorageServiceDriver storage) {
-        this.storage = storage;
-    }
 
     public void putToTemp(String fileName, String data) {
         try {

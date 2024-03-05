@@ -14,22 +14,22 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class StorageAvatarService {
 
-    private final StorageServiceDriver storage;
-    private final String avatarBucketName = "avatars";
-
-    public StorageAvatarService(StorageServiceDriver storage) {
-        this.storage = storage;
-    }
-
-    public void putOriginal(int user_id, File file) {
-        String path = "/" + user_id + "/original";
-        try {
-            storage.put(avatarBucketName, path, file);
-        } catch (Exception e) {
-            System.out.println(" Error ");
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
-    }
+//    private final StorageServiceDriver storage;
+//    private final String avatarBucketName = "avatars";
+//
+//    public StorageAvatarService(StorageServiceDriver storage) {
+//        this.storage = storage;
+//    }
+//
+//    public void putOriginal(int user_id, File file) {
+//        String path = "/" + user_id + "/original";
+//        try {
+//            storage.put(avatarBucketName, path, file);
+//        } catch (Exception e) {
+//            System.out.println(" Error ");
+//            e.printStackTrace();
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
 }

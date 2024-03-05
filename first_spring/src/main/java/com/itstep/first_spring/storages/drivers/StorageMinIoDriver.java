@@ -3,6 +3,7 @@ package com.itstep.first_spring.storages.drivers;
 import io.minio.*;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -15,40 +16,36 @@ import java.security.NoSuchAlgorithmException;
 public class StorageMinIoDriver implements StorageDriverInterface
 {
     @Value("${storage.minio.endpoint}")
-    private String endpoint; // Замените на ваше значение
+    private String endpoint = "http://localhost:9000"; // Замените на ваше значение
 
     @Value("${storage.minio.access.key}")
-    private String accessKey; // Замените на ваше значение
+    private String accessKey = "o8x5Uwv0PPB1YeeM0U5w"; // Замените на ваше значение
 
     @Value("${storage.minio.secret.key}")
-    private String secretKey; // Замените на ваше значение
+    private String secretKey = "wOxeP8y1G04Hx3SpSivj27tQftmc2M8b7PGTE2xp"; // Замените на ваше значение
 
-    private final MinioClient minioClient;
-    public StorageMinIoDriver() {
-        this.minioClient =
-                MinioClient.builder()
-                        .endpoint(endpoint)
-                        .credentials(accessKey, secretKey)
-                        .build();
+    private MinioClient minioClient;
+
+
+    private void checkConnect() {
+        if (minioClient == null) {
+            this.minioClient =
+                    MinioClient.builder()
+                            .endpoint(endpoint)
+                            .credentials(accessKey, secretKey)
+                            .build();
+        }
     }
 
     /**
      * Проверяем - есть ли контейнер (корзина, дирректория) для хранения
      * @param bucketName
-     * @throws ServerException
-     * @throws InsufficientDataException
-     * @throws ErrorResponseException
-     * @throws IOException
-     * @throws NoSuchAlgorithmException
-     * @throws InvalidKeyException
-     * @throws InvalidResponseException
-     * @throws XmlParserException
-     * @throws InternalException
      */
     private void checkBucket(String bucketName)
             throws ServerException, InsufficientDataException,
             ErrorResponseException, IOException, NoSuchAlgorithmException,
             InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        checkConnect();
         // Make  bucket if not exist.
         boolean found =
                 minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
