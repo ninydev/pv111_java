@@ -1,6 +1,7 @@
 package com.itstep.first_spring.controllers.profile;
 
 import com.itstep.first_spring.services.auth.UserService;
+import com.itstep.first_spring.services.media.ConvertAvatarMediaService;
 import com.itstep.first_spring.services.storages.StorageAvatarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ public class AvatarUpload
 
     private final StorageAvatarService avatarService;
     private final UserService userService;
+    private final ConvertAvatarMediaService convertAvatarMediaService;
 
     @PostMapping("/upload")
 
@@ -31,6 +33,9 @@ public class AvatarUpload
 
         try {
             avatarService.putOriginal(userService.getCurrentUser().getId(), avatar.getBytes());
+            convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
+
+
 
 //            // Получаем имя файла
 //            String fileName = file.getOriginalFilename();

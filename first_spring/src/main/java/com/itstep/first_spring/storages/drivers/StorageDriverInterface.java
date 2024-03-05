@@ -9,6 +9,8 @@ import java.security.NoSuchAlgorithmException;
 
 public interface StorageDriverInterface {
 
+    public byte[] getBytes(String bucketName, String path) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException;
+
 
     /**
      * Разместить файл в хранилище

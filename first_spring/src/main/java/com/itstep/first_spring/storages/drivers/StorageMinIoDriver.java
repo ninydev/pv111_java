@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -57,6 +58,17 @@ public class StorageMinIoDriver implements StorageDriverInterface
         }
     }
 
+
+    @Override
+    public byte[] getBytes(String bucketName, String path) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        checkConnect();
+        InputStream stream = minioClient.getObject(
+                GetObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(path)
+                        .build());
+        return stream.readAllBytes();
+    }
 
     @Override
     public void put(String bucketName, String path, File file)

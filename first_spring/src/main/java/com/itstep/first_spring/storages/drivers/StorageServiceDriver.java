@@ -18,6 +18,11 @@ public class StorageServiceDriver implements StorageDriverInterface{
     }
 
     @Override
+    public byte[] getBytes(String bucketName, String path) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        return driver.getBytes(bucketName, path);
+    }
+
+    @Override
     public void put(String bucketName, String path, File file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         driver.put(bucketName, path, file);
     }
