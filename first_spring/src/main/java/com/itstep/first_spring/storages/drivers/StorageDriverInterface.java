@@ -32,4 +32,8 @@ public interface StorageDriverInterface {
             ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException,
             InvalidResponseException, XmlParserException, InternalException;
 
+    public void put(String bucketName, String path, byte[] bytes)
+            throws IOException, ServerException, InsufficientDataException,
+            ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException,
+            InvalidResponseException, XmlParserException, InternalException;
 }

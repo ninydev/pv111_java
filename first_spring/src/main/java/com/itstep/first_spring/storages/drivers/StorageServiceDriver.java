@@ -26,4 +26,8 @@ public class StorageServiceDriver implements StorageDriverInterface{
     public void put(String bucketName, String path, String data) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
         driver.put(bucketName, path, data);
     }
+
+    public void put(String bucketName, String path, byte[] bytes) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+        driver.put(bucketName, path, bytes);
+    }
 }

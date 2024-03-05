@@ -85,6 +85,20 @@ public class StorageMinIoDriver implements StorageDriverInterface
                                 bais, bais.available(), -1)
                         .build());
         bais.close();
+    }
 
+
+    public void put(String bucketName, String path, byte[] bytes)
+            throws IOException, ServerException, InsufficientDataException,
+            ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException,
+            InvalidResponseException, XmlParserException, InternalException {
+        checkBucket(bucketName);
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+
+        minioClient.putObject(
+                PutObjectArgs.builder().bucket(bucketName).object(path).stream(
+                                bais, bais.available(), -1)
+                        .build());
+        bais.close();
     }
 }
