@@ -3,11 +3,12 @@ services:
   pv111.storage.minio:
     container_name: pv111.storage.minio
     image: minio/minio:latest
-    command: server --console-address ":9001"
+    command: server --console-address :9001 /data
     ports:
       - "9000:9000"
       - "9001:9001"
-
+    volumes:
+      - ./volumes/minio:/data
     expose:
       - "9000"
       - "9001"
