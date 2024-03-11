@@ -1,7 +1,10 @@
 const wsPrivateUrl = 'ws://localhost:8080/websocket-private';
 
+const headers = new Headers();
+
 const stompPrivateClient = new StompJs.Client({
-    brokerURL: wsPrivateUrl
+    brokerURL: wsPrivateUrl,
+    headers: headers
 });
 
 stompPrivateClient.onConnect = (frame) => {
@@ -28,6 +31,11 @@ function setPrivateConnected(connected) {
 }
 
 function privateConnect() {
+    let token = document.getElementById("jwtToken").value;
+    console.log(token);
+    headers.delete('Authorization');
+    headers.append('Authorization', 'Bearer ' + token);
+    console.log(headers);
     stompPrivateClient.activate();
 }
 
