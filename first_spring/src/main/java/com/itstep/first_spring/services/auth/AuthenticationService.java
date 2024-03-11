@@ -2,12 +2,14 @@ package com.itstep.first_spring.services.auth;
 
 
 import com.itstep.first_spring.dto.auth.UserDTO;
+import com.itstep.first_spring.dto.websocket.test.GreetingMessageDTO;
 import com.itstep.first_spring.models.auth.RoleEnum;
 import com.itstep.first_spring.models.auth.UserModel;
 import com.itstep.first_spring.requests.auth.SignInRequest;
 import com.itstep.first_spring.requests.auth.SignUpRequest;
 import com.itstep.first_spring.response.auth.JwtAuthenticationResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     /**
      * Регистрация пользователя
@@ -61,6 +64,10 @@ public class AuthenticationService {
         UserModel user = userService.getByUsername(request.getUsername());
 
         var jwt = jwtService.generateToken(user);
+
+        simpMessagingTemplate.convertAndSend("/topic/greetings",
+                new GreetingMessageDTO("Приветсвуем: " + user.getUsername()));
+
         return new JwtAuthenticationResponse(jwt, new UserDTO(user));
     }
 }

@@ -46,8 +46,12 @@ public class SecurityConfiguration {
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
                         // Можно указать конкретный путь, * - 1 уровень вложенности, ** - любое количество уровней вложенности
+                        // На главную тоже можно
+                        .requestMatchers("/*").permitAll()
                         // На Логин и регистрацию можно
                         .requestMatchers("/api/auth/**").permitAll()
+                        // Откроем маршрут к сокетам
+                        .requestMatchers("/websocket-public/**").permitAll()
                         // На документацию можно
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/*", "/docs/**").permitAll()
                         // На все остальные - нельзя

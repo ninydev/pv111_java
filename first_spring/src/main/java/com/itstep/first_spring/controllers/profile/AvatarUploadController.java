@@ -17,7 +17,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("api/profile/avatar")
 @RequiredArgsConstructor
-public class AvatarUpload
+public class AvatarUploadController
 {
 
     private final StorageAvatarService avatarService;
@@ -25,7 +25,6 @@ public class AvatarUpload
     private final ConvertAvatarMediaService convertAvatarMediaService;
 
     @PostMapping("/upload")
-
     public ResponseEntity<String> uploadAvatar(@RequestParam("avatar") MultipartFile avatar) {
         if (avatar.isEmpty()) {
             return new ResponseEntity<>("Please select a file!", HttpStatus.BAD_REQUEST);
