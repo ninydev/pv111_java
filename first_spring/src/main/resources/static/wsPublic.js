@@ -42,12 +42,13 @@ function connect() {
 function disconnect() {
     stompPublicClient.deactivate();
     setConnected(false);
-    console.log("Disconnected");
+    console.log("Public Disconnected");
 }
 
 function sendName() {
     stompPublicClient.publish({
         destination: "/app/hello",
+        // headers: headers
         body: JSON.stringify({'name': $("#name").val()})
     });
 }

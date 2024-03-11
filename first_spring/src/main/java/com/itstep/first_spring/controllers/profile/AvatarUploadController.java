@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @RequestMapping("api/profile/avatar")
@@ -23,6 +25,7 @@ public class AvatarUploadController
     private final StorageAvatarService avatarService;
     private final UserService userService;
     private final ConvertAvatarMediaService convertAvatarMediaService;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadAvatar(@RequestParam("avatar") MultipartFile avatar) {
@@ -32,9 +35,22 @@ public class AvatarUploadController
 
         try {
             avatarService.putOriginal(userService.getCurrentUser().getId(), avatar.getBytes());
-            convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
 
+            // В таком виде задача по оптимизации будет выполняться в основном потоке приложения
+            // convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
 
+            // Можно создать пул потоков, или семафор - и выставлять обработку аватарок в них
+            // Если я организую иьекцию - то этот пул можно использовать для всех задач
+            executorService.submit(() -> {
+                try {
+                    // Но тогда по окончании работы мне нужно будет сообщить в сокет
+                    // что его аватарка закончена
+                    convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("Задача выполняется в потоке: " + Thread.currentThread().getName());
+            });
 
 //            // Получаем имя файла
 //            String fileName = file.getOriginalFilename();
