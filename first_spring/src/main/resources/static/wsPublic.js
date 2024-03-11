@@ -8,12 +8,13 @@ stompPublicClient.onConnect = (frame) => {
     setConnected(true);
     console.log('Public Connected: ' + frame);
     stompPublicClient.subscribe('/topic/greetings', (greeting) => {
+        console.log('/topic/greetings');
         showGreeting(JSON.parse(greeting.body).content);
     });
 };
 
 stompPublicClient.onWebSocketError = (error) => {
-    console.error('Error with websocket', error);
+    console.error('Error with public  websocket', error);
     console.error('url: ', wsPublicUrl);
 };
 
