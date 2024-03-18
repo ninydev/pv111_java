@@ -3,6 +3,9 @@ package com.itstep.first_spring.services.auth;
 
 import com.itstep.first_spring.dto.auth.UserDTO;
 import com.itstep.first_spring.dto.websocket.test.GreetingMessageDTO;
+import com.itstep.first_spring.exceptions.StatusException;
+import com.itstep.first_spring.exceptions.auth.EmailInvalidException;
+import com.itstep.first_spring.exceptions.auth.UsernameInvalidException;
 import com.itstep.first_spring.models.auth.RoleEnum;
 import com.itstep.first_spring.models.auth.UserModel;
 import com.itstep.first_spring.requests.auth.SignInRequest;
@@ -30,7 +33,7 @@ public class AuthenticationService {
      * @param request данные пользователя
      * @return токен
      */
-    public JwtAuthenticationResponse signUp(SignUpRequest request) {
+    public JwtAuthenticationResponse signUp(SignUpRequest request) throws UsernameInvalidException, EmailInvalidException, StatusException {
 
         var user = UserModel.builder()
                 .username(request.getUsername())

@@ -41,16 +41,16 @@ public class AvatarUploadController
 
             // Можно создать пул потоков, или семафор - и выставлять обработку аватарок в них
             // Если я организую иьекцию - то этот пул можно использовать для всех задач
-            executorService.submit(() -> {
-                try {
-                    // Но тогда по окончании работы мне нужно будет сообщить в сокет
-                    // что его аватарка закончена
-                    convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                System.out.println("Задача выполняется в потоке: " + Thread.currentThread().getName());
-            });
+//            executorService.submit(() -> {
+//                try {
+//                    // Но тогда по окончании работы мне нужно будет сообщить в сокет
+//                    // что его аватарка закончена
+//                    convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                System.out.println("Задача выполняется в потоке: " + Thread.currentThread().getName());
+//            });
 
 //            // Получаем имя файла
 //            String fileName = file.getOriginalFilename();

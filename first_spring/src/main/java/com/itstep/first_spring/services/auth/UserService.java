@@ -1,9 +1,13 @@
 package com.itstep.first_spring.services.auth;
 
+import com.itstep.first_spring.exceptions.StatusException;
+import com.itstep.first_spring.exceptions.auth.EmailInvalidException;
+import com.itstep.first_spring.exceptions.auth.UsernameInvalidException;
 import com.itstep.first_spring.models.auth.RoleEnum;
 import com.itstep.first_spring.models.auth.UserModel;
 import com.itstep.first_spring.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,14 +34,15 @@ public class UserService {
      *
      * @return созданный пользователь
      */
-    public UserModel create(UserModel user) {
+    public UserModel create(UserModel user) throws UsernameInvalidException, EmailInvalidException, StatusException {
         if (repository.existsByUsername(user.getUsername())) {
             // Заменить на свои исключения
-            throw new RuntimeException("Пользователь с таким именем уже существует");
+            // throw new UsernameInvalidException("Пользователь с таким именем уже существует");
+            throw new StatusException("Bad User Name", HttpStatus.FORBIDDEN);
         }
 
         if (repository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Пользователь с таким email уже существует");
+            throw new EmailInvalidException("Пользователь с таким email уже существует");
         }
 
         return this.save(user);
