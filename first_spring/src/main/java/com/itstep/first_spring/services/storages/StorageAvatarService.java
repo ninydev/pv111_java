@@ -1,21 +1,18 @@
 package com.itstep.first_spring.services.storages;
 
-import com.itstep.first_spring.models.auth.UserModel;
-import com.itstep.first_spring.storages.drivers.StorageServiceDriver;
-import io.minio.errors.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.itstep.first_spring.storages.drivers.StorageDriverInterface;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 @Service
+@AllArgsConstructor
 public class StorageAvatarService {
 
-    private final StorageServiceDriver storage  =  new StorageServiceDriver();;
+    private final StorageDriverInterface storage;
     private final String avatarBucketName = "avatars";
+
 
     private String buildPath(long user_id) {
         return "/" + user_id + "/originalBytes";
