@@ -28,6 +28,8 @@ public class StorageMinIoDriver implements StorageDriverInterface
 
     public StorageMinIoDriver(MinioClient minioClient) {
         this.minioClient = minioClient;
+        System.out.println("Create: " + this.getClass().toString());
+
     }
 
 

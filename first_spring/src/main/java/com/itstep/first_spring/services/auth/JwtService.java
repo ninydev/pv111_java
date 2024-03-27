@@ -23,6 +23,10 @@ public class JwtService {
     @Value("${token.signing.key}")
     private String jwtSigningKey;
 
+    public JwtService() {
+        System.out.println("Create: " + this.getClass().toString());
+    }
+
     /**
      * Извлечение имени пользователя из токена
      *
