@@ -37,7 +37,7 @@ public class AvatarUploadController
 
         try {
             avatarService.putOriginal(userService.getCurrentUser().getId(), avatar.getBytes());
-            rabbitTemplate.convertAndSend("myQueue", "Hello");
+            rabbitTemplate.convertAndSend("avatars", "Hello");
             // В таком виде задача по оптимизации будет выполняться в основном потоке приложения
             // convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
 
