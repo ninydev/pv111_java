@@ -4,6 +4,7 @@ import com.itstep.first_spring.services.auth.UserService;
 import com.itstep.first_spring.services.media.ConvertAvatarMediaService;
 import com.itstep.first_spring.services.storages.StorageAvatarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class AvatarUploadController
     private final StorageAvatarService avatarService;
     private final UserService userService;
     private final ConvertAvatarMediaService convertAvatarMediaService;
+    private final RabbitTemplate rabbitTemplate;
     private final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     @PostMapping("/upload")
@@ -35,7 +37,7 @@ public class AvatarUploadController
 
         try {
             avatarService.putOriginal(userService.getCurrentUser().getId(), avatar.getBytes());
-
+            rabbitTemplate.convertAndSend("myQueue", "Hello");
             // В таком виде задача по оптимизации будет выполняться в основном потоке приложения
             // convertAvatarMediaService.convertAvatar(userService.getCurrentUser().getId());
 
