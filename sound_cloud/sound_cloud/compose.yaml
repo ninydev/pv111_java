@@ -1,0 +1,40 @@
+services:
+
+  sound_cloud.rabbit.mq:
+    container_name: sound_cloud.rabbit.mq
+    image: rabbitmq:3.12.0-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER:user
+      - RABBITMQ_DEFAULT_PASS:password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  sound_cloud.storage.minio:
+    container_name: sound_cloud.storage.minio
+    image: minio/minio:latest
+    command: server --console-address :9001 /data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - ./volumes/minio:/data
+    expose:
+      - "9000"
+      - "9001"
+    environment:
+       MINIO_ROOT_USER: user
+       MINIO_ROOT_PASSWORD: password
+
+  sound_cloud.mysql:
+    container_name: sound_cloud.db.mysql
+    image: 'mysql:latest'
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql
+    environment:
+      - 'MYSQL_DATABASE=sound_cloud'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=QweAsdZxc!23'
+      - 'MYSQL_USER=user'
+    ports:
+      - '3306:3306'
