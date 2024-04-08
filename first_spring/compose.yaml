@@ -1,5 +1,11 @@
 services:
 
+  pv111.redis:
+    container_name: pv111.redis
+    image: redis
+    ports:
+      - "6379:6379"
+
   pv111.rabbit.mq:
     container_name: pv111.rabbit.mq
     image: rabbitmq:3.12.0-management-alpine

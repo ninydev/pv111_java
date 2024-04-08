@@ -7,6 +7,10 @@ import com.itstep.first_spring.models.auth.RoleEnum;
 import com.itstep.first_spring.models.auth.UserModel;
 import com.itstep.first_spring.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +22,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private final UserRepository repository;
 
     /**
@@ -25,6 +30,7 @@ public class UserService {
      *
      * @return сохраненный пользователь
      */
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public UserModel save(UserModel user) {
         return repository.save(user);
     }
@@ -35,6 +41,7 @@ public class UserService {
      *
      * @return созданный пользователь
      */
+    @CacheEvict(cacheNames = "users", allEntries = true)
     public UserModel create(UserModel user) throws UsernameInvalidException, EmailInvalidException, StatusException {
         if (repository.existsByUsername(user.getUsername())) {
             // Заменить на свои исключения
@@ -55,6 +62,7 @@ public class UserService {
      * @return пользователь
      */
     public UserModel getByUsername(String username) {
+        log.info(username);
         return repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
 

@@ -3,7 +3,9 @@ package com.itstep.first_spring.controllers;
 import com.itstep.first_spring.models.EntityModel;
 import com.itstep.first_spring.repositories.EntityRepository;
 import com.itstep.first_spring.requests.EntityModelCreateRequest;
+import com.itstep.first_spring.services.EntityService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +21,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/entity")
 @Validated
+@AllArgsConstructor
 public class EntityController {
 
-    private final EntityRepository entityRepository;
-    public EntityController(EntityRepository entityRepository) {
-        this.entityRepository = entityRepository;
-    }
+    private final EntityService entityService;
 
     /**
      * Create
@@ -32,12 +32,12 @@ public class EntityController {
      * @return
      */
     @PostMapping("")
-    public ResponseEntity<EntityModel> create(
+    public ResponseEntity<EntityModel> save(
             @RequestBody EntityModelCreateRequest request
     ) {
 
         // Ссылка (указатель) на вновь созданный экземпляр сущности
-        EntityModel createdEntity = entityRepository.save(request.toEntity());
+        EntityModel createdEntity = entityService.save(request.toEntity());
 
         // Ссылка (URI) на запрос к этой сущности
         URI location = ServletUriComponentsBuilder
@@ -55,8 +55,8 @@ public class EntityController {
      * @return
      */
     @GetMapping("")
-    public ResponseEntity<Page<EntityModel>> readAll(Pageable pageable) {
-        Page<EntityModel> result = entityRepository.findAll(pageable);
+    public ResponseEntity<Page<EntityModel>> findAll(Pageable pageable) {
+        Page<EntityModel> result = entityService.findAll(pageable);
 
         if (result.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -71,9 +71,9 @@ public class EntityController {
      * @return
      */
     @GetMapping("/{id}")
-    public ResponseEntity<EntityModel> readById(@PathVariable Long id) {
+    public ResponseEntity<EntityModel> findById(@PathVariable Long id) {
 
-        Optional<EntityModel> result = entityRepository.findById(id);
+        Optional<EntityModel> result = entityService.findById(id);
 
         return result.map(
                         ResponseEntity::ok)
