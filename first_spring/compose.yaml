@@ -1,5 +1,16 @@
 services:
 
+  pv111.api.first:
+    build:
+      dockerfile: ./Dockerfile
+    depends_on:
+      - pv111.rabbit.mq
+      - pv111.redis
+      - pv111.storage.minio
+      - mysql
+    ports:
+      - "8080:8080"
+
   pv111.redis:
     container_name: pv111.redis
     image: redis
