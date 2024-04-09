@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,6 +32,10 @@ public class EntityService {
     public Page<EntityModel> findAll( Pageable pageable) {
         log.info("find All");
         return entityRepository.findAll(pageable);
+    }
+
+    public List<EntityModel> findAll( ) {
+        return entityRepository.findAll();
     }
 
     @Cacheable(cacheNames = "entities", key = "#id")

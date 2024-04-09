@@ -1,0 +1,11 @@
+type Query {
+    getEntityById(id: Int): Entity
+    getEntities: [Entity]
+}
+
+type Entity {
+    id: Int
+    name: String
+    createdAt: String
+    updatedAt: String
+}
