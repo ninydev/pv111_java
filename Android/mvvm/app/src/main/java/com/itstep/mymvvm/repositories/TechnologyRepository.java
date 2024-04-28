@@ -9,6 +9,10 @@ public class TechnologyRepository {
     private void seed(){
         technologies.add(new TechnologyModel("Java", 30));
         technologies.add(new TechnologyModel("C++", 50));
+        technologies.add(new TechnologyModel("Basic", 50));
+        technologies.add(new TechnologyModel("Pascal", 50));
+        technologies.add(new TechnologyModel("Go", 15));
+        technologies.add(new TechnologyModel("Python", 25));
     }
 
     private final ArrayList<TechnologyModel> technologies;

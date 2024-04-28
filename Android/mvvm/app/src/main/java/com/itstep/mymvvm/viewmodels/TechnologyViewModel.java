@@ -1,6 +1,8 @@
 package com.itstep.mymvvm.viewmodels;
 
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.itstep.mymvvm.MainActivity;
@@ -32,5 +34,20 @@ public class TechnologyViewModel {
         );
 
         list.setAdapter(adapter);
+
+        Button btnAdd = activity.findViewById(R.id.technologyList_btn_add);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TechnologyModel newModel = TechnologyRepository.createModel();
+                newModel.setAge(0);
+                newModel.setName("Test");
+                TechnologyRepository.getInstance().getTechnologies().add(newModel);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+
     }
+
 }
