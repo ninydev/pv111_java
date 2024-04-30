@@ -13,8 +13,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.itstep.mylocalstorage.models.EntityModel;
+import com.itstep.mylocalstorage.repositories.EntityRepository;
+import com.itstep.mylocalstorage.services.DbService;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +37,22 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        DbService.getInstance(this);
+
+        try {
+            EntityRepository rep = EntityRepository.getInstance();
+            EntityModel model = EntityRepository.createModel();
+            model.setId(10);
+            model.setName("Hello World");
+            rep.create(model);
+
+            ArrayList<EntityModel> models = rep.readAll();
+            EntityModel modelById = rep.getById(10);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         inputText = findViewById(R.id.inputText);
         outputText = findViewById(R.id.outputText);
