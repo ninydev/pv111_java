@@ -1,6 +1,7 @@
 package com.itstep.mylocalstorage;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +20,12 @@ import com.itstep.mylocalstorage.services.DbService;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.AbstractList;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +53,27 @@ public class MainActivity extends AppCompatActivity {
             model.setName("Hello World");
             rep.create(model);
 
-            ArrayList<EntityModel> models = rep.readAll();
+            rep.readAllFromNet(new Callback<ArrayList<EntityModel>>() {
+                @Override
+                public void onResponse(Call<ArrayList<EntityModel>> call, Response<ArrayList<EntityModel>> response) {
+                    if (response.isSuccessful()) {
+                        ArrayList<EntityModel> entityModels =  new ArrayList<>();
+                        entityModels.addAll(response.body());
+                        for (int i = 0; i < entityModels.size(); i++) {
+                            Log.d("keeper", entityModels.get(i).getName());
+                            // findViewById();
+                        }
+                    } else {
+                        // Обработка ошибки
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<EntityModel>> call, Throwable t) {
+                    // Обработка ошибки
+                }
+            });
+
             EntityModel modelById = rep.getById(10);
 
         } catch (Exception e) {

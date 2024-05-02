@@ -3,23 +3,30 @@ package com.itstep.mylocalstorage.repositories;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.itstep.mylocalstorage.clients.MockapiClient;
 import com.itstep.mylocalstorage.models.EntityModel;
+import com.itstep.mylocalstorage.services.ApiService;
 import com.itstep.mylocalstorage.services.DbService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 
 public class EntityRepository {
 
-    private DbService dbService;
-
     private static String tableName ="entities";
-
+    private DbService dbService;
+    private ApiService apiService;
 
     private EntityRepository() throws Exception {
         dbService = DbService.getInstance();
+        apiService = MockapiClient.getInstance().create(ApiService.class);
         migration();
     }
 
@@ -54,6 +61,16 @@ public class EntityRepository {
             models.add(model);
         }
         return models;
+    }
+
+    public void readAllFromNet(Callback<ArrayList<EntityModel>> callback) {
+
+        ArrayList<EntityModel> entityModels = new ArrayList<>();
+
+        // Выполнение запроса на получение всех сущностей
+        Call<ArrayList<EntityModel>> call = apiService.getAll();
+        call.enqueue(callback);
+
     }
 
     public EntityModel getById(int id) {

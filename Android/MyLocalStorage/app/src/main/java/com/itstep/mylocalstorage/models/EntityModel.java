@@ -1,9 +1,20 @@
 package com.itstep.mylocalstorage.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class EntityModel {
 
+    public EntityModel() {}
+
+    public EntityModel(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @SerializedName("id")
     private int id;
 
+    @SerializedName("name")
     private String name;
 
     public String getName() {
