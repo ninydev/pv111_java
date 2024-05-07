@@ -36,6 +36,8 @@ public class DbService {
         return db.rawQuery(sqlQuery, null);
     }
 
+
+
     public static DbService getInstance() throws Exception {
         if (instance == null) {
             throw new Exception(" DB Not Found ");
